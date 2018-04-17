@@ -2,6 +2,7 @@ var express 		=	require('express');
 var router 			= 	express.Router();
 var multer			= 	require('multer');
 var Car 			= 	require('../models/car');
+var Order			=	require('../models/order')
 
 
 router.get('/', function(req, res){
@@ -84,7 +85,6 @@ router.post('/',function(req,res,next) {
 		weekend_rate: 	 weekend_rate,
 		weekly_rate	: 	 weekly_rate,
 		monthly_rate:	 monthly_rate,
-			// image		 	:   imageName
 			
 		
 		});
@@ -160,7 +160,104 @@ router.get('/book/:id', function(req, res, next) {
 // }); 
 
 		 
+/*router.post('/order',function(req,res,next) {
 
+	console.log(req.body)
+	//Get Form Values
+	var name 			=	 req.body.name;
+	var type 			=	 req.body.type;
+	var seat 		  	=	 req.body.seat;
+	var rental_fee   	=	 req.body.daily_rate;
+	var ktp				= 	 req.body.ktp;
+	var start_date		= 	 req.body.start_date;
+	var end_date		=	 req.body.end_date;
+
+	console.log('yyyyyyyyyyyyyyyyyyyyyyyyyy')
+	
+	var errors = req.validationErrors();
+
+	console.log('333333333333')
+
+	if(errors) {
+		res.render('/',{
+		errors 		: 	errors,
+		name 		: 	name,
+		type 		: 	type,
+     	seat 		: 	seat,
+		rental_fee  :	rental_fee,
+		ktp			: 	ktp,
+		start_date	: 	start_date,
+		end_date	:	end_date,
+	 
+			
+		});
+		console.log(errors)
+	} else {
+		//CReating a MOdal for New cars
+		console.log('ooooo')
+		var NewOrder	= new Order({
+			name 		: 	name,
+			type 		: 	type,
+			seat 		: 	seat,
+			rental_fee  :	rental_fee,
+			ktp			: 	ktp,
+			start_date	: 	start_date,
+			end_date	:	end_date,
+		 
+			// image		 	:   imageName
+		
+		});
+
+		//Create Cars
+		console.log(err);
+		console.log( newOrder );		
+
+			
+			//Create New car
+			newOrder.save(newOrder,function(err,order) {
+				if(err)  throw err;
+				console.log(order);
+				console.log(err)
+				jsonorder = JSON.stringify({order: 'order'});
+				console.log(jsonorder);
+				res.send(jsonorder);
+			});
+
+	}
+
+});
+
+*/
+
+
+router.post('/order', function (req, res, next) {
+	var order = new Order({
+		name 		: 	req.body.name,
+		type 		: 	req.body.type,
+		seat 		: 	req.body.seat,
+		rental_fee  :	req.body.rental_fee,
+		ktp			: 	req.body.ktp,
+		start_date	: 	req.body.start_date,
+		end_date	:	req.body.end_date,
+	});
+  
+	order.save( function (err) {
+	  if (err) return next(err);
+	});
+  console.log(order)
+  });
+
+  //get order data
+
+  router.get('/order', function(req, res){
+	Order.find({}, function(err, orders){
+		orders.title = 'title'
+		res.json(orders)
+
+		orders: orders
+
+	});
+  });
 
 
 module.exports = router;

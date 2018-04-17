@@ -114,7 +114,7 @@ $(function() {
                 var day = dt.getDay();
                 
                 if (day == 0 || day == 6) {
-                    alert("For the Saturday or Sunday selection, the start date (Collection) should be before Saturday and end date (Return) should be after Sunday.\n\nFor weekend package: \nWeekend is from Fri to Mon [Total 2 days], Collection is on Friday and Return is on Monday.");
+                    alert("");
                     $(this).val("");
                     $(this).data('datepicker').inline = true;
                 }
@@ -159,8 +159,7 @@ $(function() {
                     currDate.setTime(currDate.getTime() + weeks * 7 * 24 * 60 * 60 * 1000);
                     rates.weekly = weeks;
 
-                    // Calculate the daily rate, noting conflict with
-                    // weekend rate
+                    // Calculate the daily rate, noting conflict with weekend rate
                     var dDays = dateEnd.getDay() - currDate.getDay();
                     if (dDays < 0) dDays += 7;
                     rates.daily += dDays;
@@ -178,7 +177,7 @@ $(function() {
                                  rates.daily   * hid_daily_rate;
 
                     // Update the interface
-                    $("#rental_fee").html('$'+rental_fee);              
+                    $("#rental_fee").html('Rp. '+rental_fee +'.00');              
                 }
                 // Calculation  ENDS
             }
@@ -197,18 +196,22 @@ $(function() {
                     </div>
                     <div class="form_w3layouts">
         
-        <form role="form" class="form-horizontal" method="POST" action="" id="frmBookingFormAction" name="frmBookingFormAction">
-        <input type="hidden" value="{{car.id}}" name="data.id" id="data.id">
+                        <input type="hidden" value="{{car.id}}" name="data.id" id="data.id">
         
-        <input type="hidden" id="hid_daily_rate" name="hid_daily_rate" value="{{data.daily_rate}}" />
-        <input type="hidden" id="hid_weekend_rate" name="hid_weekend_rate" value="{{data.weekend_rate}}" />
-        <input type="hidden" id="hid_weekly_rate" name="hid_weekly_rate" value="{{data.weekly_rate}}" />
-        <input type="hidden" id="hid_monthly_rate" name="hid_monthly_rate" value="{{data.monthly_rate}} "/>
+                        <input type="hidden" id="hid_daily_rate" name="hid_daily_rate" value="{{data.daily_rate}}" />
+                        <input type="hidden" id="hid_weekend_rate" name="hid_weekend_rate" value="{{data.weekend_rate}}" />
+                        <input type="hidden" id="hid_weekly_rate" name="hid_weekly_rate" value="{{data.weekly_rate}}" />
+                        <input type="hidden" id="hid_monthly_rate" name="hid_monthly_rate" value="{{data.monthly_rate}} "/>
+                
+    <form role="form" class="form-horizontal" method="POST" action="" id="frmBookingFormAction" name="frmBookingFormAction">   
+       
 
 
-      
-             
-    </div>
+    
+    <div class="agileits-left">
+            <input type="text" name="name" class="name" value="{{data.name}}">
+        </div>
+        
     <div class="agileits-right">
         <input type="text" name="type" class="type" value="{{data.type}}">
     </div>
@@ -216,18 +219,12 @@ $(function() {
     <div class="agileits-left">
         <input type="text" name="seat" class="seat" value="{{data.seat}}">
     </div>
-    <div class="agileits-right">
-        <input type="text" name="name" class="name" value="{{data.name}}">
-    </div>
     
-    <div class="clear"></div>
-    <div class="agileits-left">
+   
+    <div class="agileits-right">
         <input type="text" name="ktp" class="ktp" value="" placeholder="insert your id number">
     </div>
-    <div class="agileits-right">
-        <input id=""type="text" name="total" class="total" value="">
-    </div>
-            
+  
     <div class="clear"></div>
     <div class="agileits-left">
           <label for="start_date" class="control-label col-sm-3">Start Date <label class="clr_error">*</label></label>
@@ -267,14 +264,13 @@ $(function() {
         <div class="agileits-right">
           <label class="control-label col-sm-3">Rental Fee</label>
           <div class="col-sm-5">
-            <p class="form-control-static"><strong>: <span id="rental_fee">$00.00</span></strong></p>
+            <p class="form-control-static"><strong>: <span id="rental_fee">Rp. </span></strong></p>
           </div>
         </div>
         
     </div>	
     <div class="clear"></div>
-    <div class="submit">
-        <input type="submit" value="Book Now!">
+    <button type="button" class="btn btn-primary">submit</button>
     </div> 
 </form>
 </div>			
@@ -282,3 +278,26 @@ $(function() {
 <div class="agileits-w3layouts-copyright text-center">
 <p> <a href="//w3layouts.com/">
 </div>	
+
+<script>
+        console.log('test')
+        $(".btn-primary").on('click', function () {
+            console.log('tttt')
+            var data = $("#frmBookingFormAction :input").serializeArray();
+            $.ajax({
+                type: "post",
+                url: "http://localhost:3000/api/car/order",
+                data: data,
+                success: function (data) {
+                 
+                    //console.log(data);
+                    if (data) {
+                        window.location = "http://localhost:3000/admin/payment";
+                    }
+                },
+                error: function() {
+                    console.log('err');
+                }
+            });
+        });
+      </script>

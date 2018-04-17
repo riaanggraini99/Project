@@ -2,6 +2,7 @@ var express = require('express');
 var car_crud = require('./car_add');
 var router = express.Router();
 var Car 			= 	require('../models/car');
+var Order     = require('../models/order');
 
 
 
@@ -30,6 +31,15 @@ router.get('/add_user', function(req, res, next){
   res.render('add_user', { title: 'add_user' });
 });
 
+
+//get order data
+
+router.get('/order', function(req, res, next){
+  Order.find({}, function(err, orders){    
+    res.render('order_admin', { title: 'order', orders:orders});
+  });
+  
+})
 
 //admin login
 
