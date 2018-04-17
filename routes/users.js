@@ -9,18 +9,33 @@ var Car 			= 	require('../models/car');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	Car.find({}, function(err, cars){    
+	Car.find({}, function(err, cars){
+		console.log(cars)    
 		res.render('index', { title: 'Home', cars:cars});
 	});
 	});
 
-router.get('/book_now', function(req, res, next) {
+router.get('/book_now/:id', function(req, res, next) {
 		// connect to database, get find{} car
-		var query = {"_id": req.params.id};
-		Car.findById(query, function(err, data){    
-		  res.render('book_now', { title: 'booknow', data:data});
+		Car.find({}, function(err, cars){
+	  res.render('book_now', { title: 'booknow', data:data});
 		});
 		});
+
+/*router.get('/book_now1/:id', function(req, res, next) {
+			// connect to database, get find{} car
+		Car.find({}, function(err, cars){
+		  res.render('book_now1', { title: 'booknow', data:data});
+			});
+			});
+*/
+router.get('/book_now1/:id', function(req, res, next) {
+			// connect to database, get find{} car
+			var query = {"_id": req.params.id};
+			Car.findById(query, function(err, data){    
+			  res.render('book_now1', { title: 'booknow', data:data});
+			});
+			});
 
 
 

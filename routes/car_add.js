@@ -22,8 +22,11 @@ router.post('/',function(req,res,next) {
 	//Get Form Values
 	var name 			=	 req.body.name;
 	var type 			=	 req.body.type;
-	var seat 		  =	 req.body.seat;
-	var price    	=	 req.body.price;
+	var seat 		  	=	 req.body.seat;
+	var daily_rate   	=	 req.body.daily_rate;
+	var weekend_rate	= 	 req.body.weekend_rate;
+	var weekly_rate		= 	 req.body.weekly_rate;
+	var monthly_rate	=	 req.body.monthly_rate;
 
 	console.log('yyyyyyyyyyyyyyyyyyyyyyyyyy')
 	
@@ -59,21 +62,28 @@ router.post('/',function(req,res,next) {
 
 	if(errors) {
 		res.render('m_car',{
-			errors 		: 	errors,
-			name 			: 	name,
-			type 			: 	type,
-      seat 		  : 	seat,
-      price     :   price,
+		errors 		: 	errors,
+		name 		: 	name,
+		type 		: 	type,
+     	seat 		: 	seat,
+		daily_rate   	:	 daily_rate,
+		weekend_rate	: 	 weekend_rate,
+		weekly_rate		: 	 weekly_rate,
+		monthly_rate	:	 monthly_rate,
+	 
 			
 		});
 	} else {
 		//CReating a MOdal for New cars
 		console.log('ooooo')
 		var newCar	= new Car({
-      name 			: 	name,
-			type 			: 	type,
-      seat 		  : 	seat,
-			price     :   price
+      	name 		: 	name,
+		type 		: 	type,
+      	seat 		: 	seat,
+		daily_rate  :	 daily_rate,
+		weekend_rate: 	 weekend_rate,
+		weekly_rate	: 	 weekly_rate,
+		monthly_rate:	 monthly_rate,
 			// image		 	:   imageName
 			
 		
@@ -131,7 +141,7 @@ router.get('/book/:id', function(req, res, next) {
         } else {
 		  return res.send(data);
 		  console.log('hahah')
-		  console.log(logo)
+		  console.log(data)
         }
      
   });

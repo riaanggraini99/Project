@@ -31,6 +31,8 @@
   <div class="row" id="booking">
     <div class="col-sm-3"><img src="https://placehold.it/150x80?text=IMAGE" style="width:100%" alt="Image" class="img-responsive"/>
       <p>Current Project</p>
+      tes
+      <p show="hidden" id="car_id">{{car.id}}</p>
       <li>name    :{{car.name}}</li>
       <li>name    :{{car.name}}</li>
       <li>type    :{{car.type}}</li>
@@ -49,23 +51,23 @@
       console.log('test')
       $(".btn-primary").on('click', function () {
           console.log('tttt')
+          window.location ='/book_now1/' + $('#car_id').text();
           var data = $("#booking").serializeArray();
-          $.ajax({
-              type: "get",
-              url: "http://localhost:3000/api/car/book/:id",
-              data: data,
-              success: function (data) {
+          // $.ajax({
+          //     type: "get",
+          //     url: "http://localhost:3000/api" + $('#car_id').text(),
+          //     data: data,
+          //     success: function (data) {
               
-                  console.log(data);
-                  if (data) {
+          //         console.log(data);
+          //         if (data) {
                      
-                      window.location ='http://localhost:3000/book_now';
-                  }
-              },
-              error: function() {
-                  console.log('err');
-              }
-          });
+          //         }
+          //     },
+          //     error: function() {
+          //         console.log('err');
+          //     }
+          // });
       });
 
     </script>

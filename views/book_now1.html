@@ -1,0 +1,284 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        
+        <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+            function hideURLbar(){ window.scrollTo(0,1); } </script>
+        <!-- //custom-theme -->
+        
+        <link href="/css1/style.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+        
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+        
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        
+        <style type="text/css">
+        
+        td.red span.ui-state-default {
+            color: #f00;
+            font-weight:normal;
+        }
+        td.green span.ui-state-default {
+            color: #0f0;
+        }
+        </style>
+        
+        <script type="text/javascript">
+        
+        // Finds difference in months between two
+// dates
+function monthDiff(d1, d2) {
+    var months;
+
+    // Add the difference in years
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+
+    // Add the difference in months
+    months += d2.getMonth() - d1.getMonth();
+
+    return months;
+}
+
+// Adds a specified amount of months to
+// a given date
+function addMonths(d, months) {
+    var currMonth = d.getMonth();
+    var newMonth = currMonth + months;
+
+    // Calculate the years and months to add
+    var dYears = Math.floor(newMonth / 12);
+    newMonth = newMonth % 12;
+
+    // Set the months and years
+    d.setMonth(newMonth);
+    d.setYear(d.getFullYear() + dYears);
+
+    // Return the new date
+    return d;
+}
+
+$(function() {
+
+    var array = ["2016-07-26","2016-08-17","2016-08-18","2016-08-19","2016-08-20","2016-08-30","2016-08-31","2016-09-01","2016-09-02","2016-09-15","2016-09-16","2016-09-17","2016-09-20","2016-09-21","2016-09-22","2016-10-05","2016-10-06","2016-10-07","2016-10-12","2016-10-13","2016-10-14","2016-11-17","2016-11-18","2016-11-19","2016-11-20","2016-11-21","2016-11-22"];       
+
+    $(".datepicker").datepicker({
+        showOtherMonths: false,
+        selectOtherMonths: true,
+        dateFormat : "dd-mm-yy",
+        
+        minDate: 0,
+        maxDate: "+12M +10D",
+        beforeShowDay: function(date){
+            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+            
+            //alert(date+"  "+array.indexOf(string));
+            var day = date.getDay();
+            
+            if (array.indexOf(string) != -1) {
+                return [ array.indexOf(string) == -1, 'holiday red', jQuery.datepicker.formatDate('dd-mm-yy', date) + ' is booked' ];
+            } else {
+                if (day == 0 || day == 6) {
+                    return [array.indexOf(string) == -1, '', 'For the Saturday or Sunday selection, the start date (Collection) should be before Saturday and end date (Return) should be after Sunday.\n\nFor weekend package: \nWeekend is from Fri to Mon [Total 2 days], Collection is on Friday and Return is on Monday.'];
+                } else {
+                    return [ array.indexOf(string) == -1 ];
+                }
+            }
+        },
+        onSelect: function(dateText, inst) {
+            
+            $(this).data('datepicker').inline = false;
+            
+            var obj_id = $(this).attr("id");
+            
+            if (obj_id == "start_date" || obj_id == "end_date") {
+                // Weekend select STARTS
+                var pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
+                var dt = new Date(dateText.replace(pattern,"$3-$2-$1"));
+                var day = dt.getDay();
+                
+                if (day == 0 || day == 6) {
+                    alert("For the Saturday or Sunday selection, the start date (Collection) should be before Saturday and end date (Return) should be after Sunday.\n\nFor weekend package: \nWeekend is from Fri to Mon [Total 2 days], Collection is on Friday and Return is on Monday.");
+                    $(this).val("");
+                    $(this).data('datepicker').inline = true;
+                }
+                // Weekend select ENDS
+                
+                
+                // Calculation  STARTS
+                var calc_flag = 1;
+                var start_date = $("#start_date").val();
+                var end_date   = $("#end_date").val();
+                
+                if (start_date == "" || end_date == "")
+                    calc_flag = 0;
+                
+                // Get the vehicle rates
+                var hid_daily_rate   = $("#hid_daily_rate").val();
+                var hid_weekend_rate = $("#hid_weekend_rate").val();
+                var hid_weekly_rate  = $("#hid_weekly_rate").val();
+                var hid_monthly_rate = $("#hid_monthly_rate").val();
+                
+                var rental_fee       = 0;
+                var rates            = {
+                    daily   :0,
+                    weekend :0,
+                    weekly  :0,
+                    monthly :0
+                };
+                
+                if (calc_flag) {
+                    // get the start and end date
+                    var dateStart = $("#start_date").datepicker("getDate");
+                    var dateEnd = $("#end_date").datepicker("getDate");
+
+                    // Add months to the rental fee, and move the date forward
+                    var months = monthDiff(dateStart, dateEnd);
+                    var currDate = addMonths(dateStart, months);
+                    rates.monthly = months;
+
+                    // Add weeks to the rental fee, and move the date forward
+                    var days = (dateEnd - dateStart) / 24 / 60 / 60 / 1000;
+                    var weeks = Math.floor(days / 7);
+                    currDate.setTime(currDate.getTime() + weeks * 7 * 24 * 60 * 60 * 1000);
+                    rates.weekly = weeks;
+
+                    // Calculate the daily rate, noting conflict with
+                    // weekend rate
+                    var dDays = dateEnd.getDay() - currDate.getDay();
+                    if (dDays < 0) dDays += 7;
+                    rates.daily += dDays;
+
+                    // If it loops around, readjust for weekend rate
+                    if (currDate.getDay() > dateEnd.getDay()) {
+                        rates.daily   -= 3;
+                        rates.weekend += 1;
+                    }
+
+                    console.log(rates);
+                    rental_fee = rates.monthly * hid_monthly_rate +
+                                 rates.weekly  * hid_weekly_rate  +
+                                 rates.weekend * hid_weekend_rate +
+                                 rates.daily   * hid_daily_rate;
+
+                    // Update the interface
+                    $("#rental_fee").html('$'+rental_fee);              
+                }
+                // Calculation  ENDS
+            }
+        }
+    });
+});
+        </script>
+        
+        </head>
+        
+        <body class="bg agileinfo">
+                <h1 class="agile-head text-center">Book This Car</h1>
+                <div class="container-w3">
+                    <div class="content-1-w3layouts">
+                        <img src="https://placehold.it/150x80?text=IMAGE" alt="room"/>
+                    </div>
+                    <div class="form_w3layouts">
+        
+        <form role="form" class="form-horizontal" method="POST" action="" id="frmBookingFormAction" name="frmBookingFormAction">
+        <input type="hidden" value="{{car.id}}" name="data.id" id="data.id">
+        
+        <input type="hidden" id="hid_daily_rate" name="hid_daily_rate" value="{{data.daily_rate}}" />
+        <input type="hidden" id="hid_weekend_rate" name="hid_weekend_rate" value="{{data.weekend_rate}}" />
+        <input type="hidden" id="hid_weekly_rate" name="hid_weekly_rate" value="{{data.weekly_rate}}" />
+        <input type="hidden" id="hid_monthly_rate" name="hid_monthly_rate" value="{{data.monthly_rate}} "/>
+
+
+      
+             
+    </div>
+    <div class="agileits-right">
+        <input type="text" name="type" class="type" value="{{data.type}}">
+    </div>
+    <div class="clear"></div>
+    <div class="agileits-left">
+        <input type="text" name="seat" class="seat" value="{{data.seat}}">
+    </div>
+    <div class="agileits-right">
+        <input type="text" name="name" class="name" value="{{data.name}}">
+    </div>
+    
+    <div class="clear"></div>
+    <div class="agileits-left">
+        <input type="text" name="ktp" class="ktp" value="" placeholder="insert your id number">
+    </div>
+    <div class="agileits-right">
+        <input id=""type="text" name="total" class="total" value="">
+    </div>
+            
+    <div class="clear"></div>
+    <div class="agileits-left">
+          <label for="start_date" class="control-label col-sm-3">Start Date <label class="clr_error">*</label></label>
+          <div class="col-sm-5">
+            <input type="text" autocomplete="off" placeholder="dd-mm-yy" value="" name="start_date" id="start_date" class="form-control datepicker">
+          </div>
+        </div>
+        
+     
+        <div class="agileits-right">
+          <label for="end_date" class="control-label col-sm-3">End Date <label class="clr_error">*</label></label>
+          <div class="col-sm-5">
+            <input type="text" autocomplete="off" placeholder="dd-mm-yy" value="" name="end_date" id="end_date" class="form-control datepicker">
+          </div>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="agileits-left">
+          <label class="control-label col-sm-3" for="collection_time" aria-placeholder="Collection and Return Time "></label>
+          <div class="col-sm-5">
+            <select id="collection_time" name="collection_time" class="form-control">
+            <option value="0">[Select]</option>
+            <option value="10:00">10:00 am</option>
+            <option value="11:00">11:00 am</option>
+            <option value="12:00">12:00 pm</option>
+            <option value="13:00">1:00 pm</option>
+            <option value="14:00">2:00 pm</option>
+            <option value="15:00">3:00 pm</option>
+            <option value="16:00">4:00 pm</option>
+            <option value="17:00">5:00 pm</option>
+            <option value="18:00">6:00 pm</option>
+            </select>
+          </div>
+        </div>
+        
+       
+        <div class="agileits-right">
+          <label class="control-label col-sm-3">Rental Fee</label>
+          <div class="col-sm-5">
+            <p class="form-control-static"><strong>: <span id="rental_fee">$00.00</span></strong></p>
+          </div>
+        </div>
+        
+    </div>	
+    <div class="clear"></div>
+    <div class="submit">
+        <input type="submit" value="Book Now!">
+    </div> 
+</form>
+</div>			
+</div>
+<div class="agileits-w3layouts-copyright text-center">
+<p> <a href="//w3layouts.com/">
+</div>	

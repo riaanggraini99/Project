@@ -19,9 +19,14 @@ var CarSchema 	=  new Schema({
 		required: true, 
 		
 	},
-	seat 		: String,
-	price		: Number,
-	image	 	: String
+	seat 		: {
+		type :String,
+	},
+	image		:String,
+	daily_rate   	:String,
+	weekend_rate	: 	 Number,
+	weekly_rate		: 	 Number,
+	monthly_rate	:	 Number
 });
 
 module.exports =  mongoose.model('Car', CarSchema);

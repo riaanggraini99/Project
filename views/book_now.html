@@ -9,6 +9,11 @@
 
 <link href="/css1/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="//fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+
+<script>
+
+    
+</script>
 </head>
 <body class="bg agileinfo">
 <h1 class="agile-head text-center">Book This Car</h1>
@@ -18,6 +23,17 @@
     </div>
     <div class="form_w3layouts">
         <form action="/book/{{data.id}}" method="get" class="agile_form">
+           
+
+
+
+            <input type="hidden" value="17" name="vehicle_id" id="vehicle_id">
+    
+            <input type="hidden" id="hid_daily_rate" name="hid_daily_rate" value="{{data.daily_rate}}" />
+            <input type="hidden" id="hid_weekend_rate" name="hid_weekend_rate" value="{{data.weekend_rate}}" />
+            <input type="hidden" id="hid_weekly_rate" name="hid_weekly_rate" value="{{data.weekly.rate}}" />
+            <input type="hidden" id="hid_monthly_rate" name="hid_monthly_rate" value="{{data.monthly.rate}} "/>
+
             <div class="agileits-left">
                 <input type="text" name="name" class="name" value="{{data.name}}">
              
@@ -30,15 +46,24 @@
                 <input type="text" name="seat" class="seat" value="{{data.seat}}">
             </div>
             <div class="agileits-right">
-                <input type="text" name="price" class="price" value="{{data.price}}">
+                <input id="price"type="text" name="price" class="price" value="{{data.price}}">
             </div>
+            
+            <div class="clear"></div>
+            <div class="agileits-left">
+                <input type="text" name="ktp" class="ktp" value="" placeholder="insert your id number">
+            </div>
+            <div class="agileits-right">
+                <input id=""type="text" name="total" class="total" value="">
+            </div>
+            
         
             <div class="clear"></div>
             <div class="checkin agileits-left">
-                <input placeholder="Mulai" class="date" id="datepicker" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+                <input id="start_date" placeholder="Mulai" class="date" id="start_date" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
             </div>
             <div class="checkin agileits-right">
-                <input placeholder="Sampai" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+                <input id="end_date" placeholder="Sampai" class="date" id="end_date" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
         
             </div>	
             <div class="clear"></div>
@@ -54,16 +79,23 @@
 <!--start-date-piker-->
     <link rel="stylesheet" href="/css1/jquery-ui.css" />
     <script src="/js1/jquery-ui.js"></script>
-        <script>
-            $(function() {
-            $( "#datepicker,#datepicker1" ).datepicker();
-            });
-        </script>
-<!-- /End-date-piker -->	
-<script>
+    <script src="price.js"></script> 
 
     
 </script>
 </body>
 
 </html>
+
+<!-- $.ajax({
+    type: "get",
+    url: "http://localhost:3000/api/car/book/" + $('#car_id').text(),
+    data: data,
+    success: function (data) {
+    
+        console.log(data);
+        if (data) {
+           
+            window.location ='http://localhost:3000/book_now';
+        }
+    }, -->
