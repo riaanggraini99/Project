@@ -1,0 +1,71 @@
+{% extends 'layout_admin.html' %}
+
+{% block content %}
+
+<body id="page-top" class="fixed-nav sticky-footer bg-dark">
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i> Cars List and Pricing <a href="/admin/m_car">Add New<i class="fa fa-pencil-square-o"></i><br/></a></div></div>
+         <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Seat</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                    </tr>
+                
+                    </thead>
+                    <tbody>
+                            {% for car in cars %}
+                    <tr >
+                
+                            <td>{{car.name}}</td>
+                            <td>{{car.name}}</td>
+                            <td>{{car.type}}</td>
+                            <td>{{car.seat}}</td>
+                            <td>{{car.price}}</td>
+                        <td><center><a href = "customers/{{customer.id}}/edit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
+                            <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Delete</button></center></td>
+                
+                    </tr>
+                    {% endfor %}
+        </tbody>
+          
+        </table>
+      </div>
+    </div>
+  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+  <script>
+    console.log('test')
+      $(".btn-danger").on('click', function () {
+          console.log('tttt')
+          var data = $("#dataTable").serializeArray();
+          var rowEl = $(this).closest('tr');
+           var id = rowEl.find('.id').text();
+          $.ajax({
+              type: "delete",
+              url: "http://localhost:3000/api/car/car/:id"+id,
+              
+              data: data,
+              success: function (data) {
+        
+                  if (data) {
+                      alert("Are you sure to delete?");
+                      window.location = "http://localhost:3000/admin/car";
+                  }
+              },
+              error: function() {
+                  console.log('err');
+              }
+          });
+      });
+
+</script>
+

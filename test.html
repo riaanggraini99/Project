@@ -1,0 +1,47 @@
+<div class="container">
+    <ul class="errors">
+    </ul>
+    <form id="form1" enctype="multipart/form-data">
+      <h1>	Add New Car here</h1>
+      <div class="form-group"></div>
+      <label for="name">Name:</label>
+      <input id="name" type="text" placeholder="Enter Name" name="name" class="form-control"/>
+      <div class="form-group"></div>
+      <label for="type">Type:</label>
+      <input id="type" type="text" placeholder="Enter Type" name="type" class="form-control"/>
+      <div class="form-group"></div>
+      <label for="seat">Seat:</label>
+      <input id="seat" type="text" placeholder="Enter Seat" name="seat" class="form-control"/>
+      <div class="form-group"></div>
+      <label for="price">Price:</label>
+      <input id="price" type="number" placeholder="Enter Price" name="price" class="form-control"/>
+      <div class="form-group"></div>
+      <label for="image">Image:</label>
+      <input id="image" type="file" name="image" class="form-control"/><br/>
+      <button type="button" class="btn btn-primary">submit</button>
+    </form>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+<script>
+    console.log('test')
+    $(".btn-primary").on('click', function () {
+        console.log('tttt')
+        var data = $("#form1 :input").serializeArray();
+        $.ajax({
+            type: "post",
+            url: "http://localhost:3003/api/car",
+            data: data,
+            success: function (data) {
+                console.log('dddd');
+                console.log(data);
+                if (data) {
+                    alert("You will now be redirected to car list.");
+                    window.location = "http://localhost:3003/admin/car";
+                }
+            },
+            error: function() {
+                console.log('err');
+            }
+        });
+    });
+  </script>
