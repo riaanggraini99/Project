@@ -24,8 +24,12 @@ var OrderSchema 	=  new Schema({
 	},
 	rental_fee		:Number,
 	ktp            	:String,
-	start_date	    :Number,
-	end_date   		:Number,
+	c_name			:String,
+	c_email			:String,
+	c_adress		:String,
+	start_date	    :String,
+	end_date   		:String,
+
 	
 });
 

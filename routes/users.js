@@ -15,6 +15,12 @@ router.get('/', function(req, res, next) {
 	});
 	});
 
+router.get('/payment', function(req, res, next) {
+	res.render('payment',{
+		'payment': 'payment'
+	});
+});
+
 router.get('/book_now/:id', function(req, res, next) {
 		// connect to database, get find{} car
 		Car.find({}, function(err, cars){

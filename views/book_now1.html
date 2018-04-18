@@ -216,13 +216,22 @@ $(function() {
         <input type="text" name="type" class="type" value="{{data.type}}">
     </div>
     <div class="clear"></div>
+    <div class="agileits-right">
+        <input type="text" name="c_adress" class="c_adress" value="" placeholder="insert your adress">
+    </div>
+    
+   
     <div class="agileits-left">
-        <input type="text" name="seat" class="seat" value="{{data.seat}}">
+        <input type="text" name="ktp" class="ktp" value="" placeholder="insert your id number">
+    </div>
+    <div class="clear"></div>
+    <div class="agileits-left">
+        <input type="text" name="c_name" class="c_name" value="" placeholder="insert your id name">
     </div>
     
    
     <div class="agileits-right">
-        <input type="text" name="ktp" class="ktp" value="" placeholder="insert your id number">
+        <input type="text" name="c_email" class="c_email" value="" placeholder="insert your email">
     </div>
   
     <div class="clear"></div>
@@ -290,9 +299,10 @@ $(function() {
                 data: data,
                 success: function (data) {
                  
-                    //console.log(data);
+                console.log(data);
                     if (data) {
-                        window.location = "http://localhost:3000/admin/payment";
+                        alert("Data Added, you will redirect to cars List");
+                        window.location = "http://localhost:3000/payment";
                     }
                 },
                 error: function() {

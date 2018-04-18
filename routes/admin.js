@@ -37,6 +37,8 @@ router.get('/add_user', function(req, res, next){
 router.get('/order', function(req, res, next){
   Order.find({}, function(err, orders){    
     res.render('order_admin', { title: 'order', orders:orders});
+
+    console.log(orders)
   });
   
 })

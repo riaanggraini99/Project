@@ -19,6 +19,11 @@ var expressValidator  = require('express-validator');
 var swig              = require('swig');
 var methodOverride    = require('method-override');
 var favicon			  = require('serve-favicon')
+var path			  =	 require('path');
+var fs				= require('fs');
+var formidable = require('formidable');
+var readChunk = require('read-chunk');
+fileType = require('file-type');
 var db 				  =	mongoose.connection;
 
 
@@ -41,8 +46,7 @@ var swig = new swig.Swig();
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 
-
-app.use(multer({dest:__dirname+'/uploads/'}).any());
+app.use('/uploads', express.static('uploads'));
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
