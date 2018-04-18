@@ -245,6 +245,23 @@ router.get('/book/:id', function(req, res, next) {
 	});
   });
    */
+
+   //delete order
+  router.delete('/order/:id', function (req, res, next) {
+	Order.findOneAndRemove(req.params.id, function (err, car) {
+	  
+		  if(err){
+			return next(err);
+		  } else {
+			return res.send("hahhah");
+			console.log('hahah')
+		  }
+	   
+	});
+  });
+  
+
+
   router.post('/order', function(req, res, next){
     var order = new Order();
     order.name 		=	req.body.name;

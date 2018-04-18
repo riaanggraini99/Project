@@ -47,6 +47,34 @@
         </table>
       </div>
     </div>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+  <script>
+    console.log('test')
+      $(".btn-danger").on('click', function () {
+          console.log('tttt')
+          var data = $("#dataTable1").serializeArray();
+          var rowEl = $(this).closest('tr');
+           var id = rowEl.find('.id').text();
+          $.ajax({
+              type: "delete",
+              url: "http://localhost:3000/api/car/order/:id"+id,
+              
+              data: data,
+              success: function (data) {
+        
+                  if (data) {
+                      alert("Are you sure to delete?");
+                      window.location = "http://localhost:3000/admin/order";
+                  }
+              },
+              error: function() {
+                  console.log('err');
+              }
+          });
+      });
+
+</script>
+
+
 
 

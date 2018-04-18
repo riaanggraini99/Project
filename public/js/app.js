@@ -49,9 +49,9 @@ function handleSuccess(data) {
                 html += '<div class="col-xs-6 col-md-4"><a href="#" class="thumbnail"><img src="' + img.publicPath + '" alt="' + img.filename  + '"></a></div>';
             } else {
                 html += '<div class="col-xs-6 col-md-4"><a href="#" class="thumbnail">Invalid file type - ' + img.filename  + '</a></div>';
-            }
+            }   alert('your transaction is being process, the voucer will be sent to your email after a few moments.')
         }
-
+ 
         $('#album').html(html);
     } else {
         alert('No images were uploaded.')

@@ -26,7 +26,11 @@ router.get('/book_now/:id', function(req, res, next) {
 		Car.find({}, function(err, cars){
 	  res.render('book_now', { title: 'booknow', data:data});
 		});
-		});
+	
+		Order.find({}, function(err, cars){
+			res.render('book_now', { title: 'booknow', order:order});
+			  });
+			  });
 
 /*router.get('/book_now1/:id', function(req, res, next) {
 			// connect to database, get find{} car
