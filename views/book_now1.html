@@ -195,7 +195,7 @@ $(function() {
                         <img src="https://placehold.it/150x80?text=IMAGE" alt="room"/>
                     </div>
                     <div class="form_w3layouts">
-                            <p hidden id="car_id">order id   :{{input.id}}</p>
+        
                         <input type="hidden" value="{{car.id}}" name="data.id" id="data.id">
         
                         <input type="hidden" id="hid_daily_rate" name="hid_daily_rate" value="{{data.daily_rate}}" />
@@ -295,14 +295,14 @@ $(function() {
             var data = $("#frmBookingFormAction :input").serializeArray();
             $.ajax({
                 type: "post",
-                url: "http://localhost:3000/api/car/order" + $('#order_id').text(),
+                url: "http://localhost:3000/api/car/order",
                 data: data,
                 success: function (data) {
                  
                 console.log(data);
                     if (data) {
                         alert("Data Added, you will redirect to cars List");
-                        window.location = "http://localhost:3000/payment";
+                        window.location = "http://localhost:3000/payment/";
                     }
                 },
                 error: function() {

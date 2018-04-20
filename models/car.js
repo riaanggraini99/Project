@@ -26,7 +26,8 @@ var CarSchema 	=  new Schema({
 	daily_rate   	:String,
 	weekend_rate	: 	 Number,
 	weekly_rate		: 	 Number,
-	monthly_rate	:	 Number
+	monthly_rate	:	 Number,
+	imagePath		: String,
 });
 
 module.exports =  mongoose.model('Car', CarSchema);

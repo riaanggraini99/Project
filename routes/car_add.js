@@ -33,6 +33,7 @@ router.post('/',function(req,res,next) {
 	var weekend_rate	= 	 req.body.weekend_rate;
 	var weekly_rate		= 	 req.body.weekly_rate;
 	var monthly_rate	=	 req.body.monthly_rate;
+	var 	imagePath	= 	 req.body.imagePath;
 
 	console.log('yyyyyyyyyyyyyyyyyyyyyyyyyy')
 	
@@ -54,6 +55,7 @@ router.post('/',function(req,res,next) {
 		weekend_rate	: 	 weekend_rate,
 		weekly_rate		: 	 weekly_rate,
 		monthly_rate	:	 monthly_rate,
+		imagePath	: imagePath,
 	 
 			
 		});
@@ -68,6 +70,7 @@ router.post('/',function(req,res,next) {
 		weekend_rate: 	 weekend_rate,
 		weekly_rate	: 	 weekly_rate,
 		monthly_rate:	 monthly_rate,
+		imagePath	: imagePath,
 			
 		
 		});
@@ -311,7 +314,7 @@ router.get('/upload', function (req, res) {
         });
     });
 
-    res.sendFile(path.join(__dirname, 'localhost:3000/payment'));
+    res.sendFile(path.join(__dirname, '/'));
 });
 
 /**
@@ -380,5 +383,8 @@ router.post('/upload_photos', function (req, res) {
         res.status(200).json(photos);
     });
 });
+
+
+
 
 module.exports = router;
